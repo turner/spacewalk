@@ -6,7 +6,7 @@
   "author": "Douglass Turner and Jim Robinson",
   "license": "ISC",
   "scripts": {
-    "build": "npx rollup --config && node scripts/injectRuntime.js",
+    "build": "node scripts/clean.js && npx rollup --config && node scripts/injectRuntime.js",
     "start": "http-server -a localhost dist"
   },
   "dependencies": {
@@ -19,13 +19,13 @@
     "juicebox.js": "^1.4.2",
     "kd3d": "github:turner/kd3d",
     "node-fetch": "^2.6.0",
-    "three": "^0.112.1",
+    "three": "^0.113.0",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
-    "@babel/preset-env": "^7.8.3",
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
     "@rollup/plugin-node-resolve": "^7.0.0",
     "fs-extra": "^8.1.0",
     "rollup-plugin-babel": "^4.3.3",
