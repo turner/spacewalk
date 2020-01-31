@@ -1,4 +1,5 @@
 import { StringUtils } from '../../node_modules/igv-utils/src/index.js'
+import { Alert } from '../../node_modules/igv-ui/src/index.js'
 import hic from '../../node_modules/juicebox.js/dist/juicebox.esm.js';
 import Panel from "../panel.js";
 import { ensembleManager, eventBus } from "../app.js";
@@ -60,6 +61,7 @@ class JuiceboxPanel extends Panel {
 
         } catch (error) {
             console.warn(error.message);
+            Alert.presentAlert(error.message);
         }
 
         this.browser.setCustomCrosshairsHandler(({ xBP, yBP, startXBP, startYBP, endXBP, endYBP, interpolantX, interpolantY }) => {
@@ -78,6 +80,7 @@ class JuiceboxPanel extends Panel {
                 await this.browser.parseGotoInput(this.locus);
             } catch (error) {
                 console.warn(error.message);
+                Alert.presentAlert(error.message);
             }
         }
 
@@ -90,6 +93,7 @@ class JuiceboxPanel extends Panel {
             $('#spacewalk_info_panel_juicebox').text( this.blurb() );
         } catch (error) {
             console.warn(error.message);
+            Alert.presentAlert(error.message);
         }
 
         this.present();
@@ -98,6 +102,7 @@ class JuiceboxPanel extends Panel {
             await this.browser.parseGotoInput(this.locus);
         } catch (e) {
             console.warn(e.message);
+            Alert.presentAlert(e.message);
         }
 
     }

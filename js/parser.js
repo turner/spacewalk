@@ -1,4 +1,5 @@
 import hic from '../node_modules/juicebox.js/dist/juicebox.esm.js';
+import { Alert } from '../node_modules/igv-ui/src/index.js'
 import { readFileAsText } from "./utils.js";
 import { hideSpinner, showSpinner } from "./app.js";
 import { ensembleManager } from "./app.js";
@@ -110,7 +111,8 @@ class Parser {
             hideSpinner();
         } catch (e) {
             hideSpinner();
-            console.warn(e.message)
+            console.warn(e.message);
+            Alert.presentAlert(e.message);
         }
 
         showSpinner();

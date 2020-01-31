@@ -18,6 +18,7 @@
     "igv-widgets": "github:igvteam/igv-widgets",
     "juicebox.js": "^1.4.2",
     "kd3d": "github:turner/kd3d",
+    "nearley": "^2.19.1",
     "node-fetch": "^2.6.0",
     "three": "^0.113.0",
     "webpack": "^4.41.5",
