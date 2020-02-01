@@ -52,6 +52,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
 
     Alert.init(container);
 
+    /*
     const swparse = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
     const str =
@@ -80,6 +81,7 @@ document.addEventListener("DOMContentLoaded", async (event) => {
     const parsed = swparse.results;
 
     console.log(parsed);
+     */
 
     const root = document.querySelector('#spacewalk-main');
     $(root).append(createGenericSelectModal('spacewalk-igv-app-generic-track-select-modal', 'spacewalk-igv-app-generic-track-select'));

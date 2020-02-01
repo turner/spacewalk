@@ -7,6 +7,11 @@ const str =
 
     '##format=sw1 name=A549 genome=hg38\n' +
 
+    'nongenomic\n' +
+    'billybobthorton\n' +
+    '121786 120787 121192\n' +
+    '122944 120197 121320\n' +
+
     'chromosome\tstart\tend\tx\ty\tz\n' +
 
     'trace 0\n' +
@@ -22,7 +27,12 @@ const str =
     'trace 2\n' +
     'chr18 50000 100000 121211 119760 120834\n' +
     'chr18 100000 150000 122007 120077 121333\n' +
-    'chr18 150000 200000 122944 120197 121320\n';
+    'chr18 150000 200000 122944 120197 121320\n' +
+
+    'nongenomic\n' +
+    'rna\n' +
+    '73235 6561 1677\n' +
+    '73262 6644 1755\n';
 
 parser.feed(str);
 

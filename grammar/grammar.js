@@ -91,31 +91,6 @@ var grammar = {
             );
         }
         },
-    {"name": "dqstring$ebnf$1", "symbols": []},
-    {"name": "dqstring$ebnf$1", "symbols": ["dqstring$ebnf$1", "dstrchar"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "dqstring", "symbols": [{"literal":"\""}, "dqstring$ebnf$1", {"literal":"\""}], "postprocess": function(d) {return d[1].join(""); }},
-    {"name": "sqstring$ebnf$1", "symbols": []},
-    {"name": "sqstring$ebnf$1", "symbols": ["sqstring$ebnf$1", "sstrchar"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "sqstring", "symbols": [{"literal":"'"}, "sqstring$ebnf$1", {"literal":"'"}], "postprocess": function(d) {return d[1].join(""); }},
-    {"name": "btstring$ebnf$1", "symbols": []},
-    {"name": "btstring$ebnf$1", "symbols": ["btstring$ebnf$1", /[^`]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "btstring", "symbols": [{"literal":"`"}, "btstring$ebnf$1", {"literal":"`"}], "postprocess": function(d) {return d[1].join(""); }},
-    {"name": "dstrchar", "symbols": [/[^\\"\n]/], "postprocess": id},
-    {"name": "dstrchar", "symbols": [{"literal":"\\"}, "strescape"], "postprocess": 
-        function(d) {
-            return JSON.parse("\""+d.join("")+"\"");
-        }
-        },
-    {"name": "sstrchar", "symbols": [/[^\\'\n]/], "postprocess": id},
-    {"name": "sstrchar", "symbols": [{"literal":"\\"}, "strescape"], "postprocess": function(d) { return JSON.parse("\""+d.join("")+"\""); }},
-    {"name": "sstrchar$string$1", "symbols": [{"literal":"\\"}, {"literal":"'"}], "postprocess": function joiner(d) {return d.join('');}},
-    {"name": "sstrchar", "symbols": ["sstrchar$string$1"], "postprocess": function(d) {return "'"; }},
-    {"name": "strescape", "symbols": [/["\\\/bfnrt]/], "postprocess": id},
-    {"name": "strescape", "symbols": [{"literal":"u"}, /[a-fA-F0-9]/, /[a-fA-F0-9]/, /[a-fA-F0-9]/, /[a-fA-F0-9]/], "postprocess": 
-        function(d) {
-            return d.join("");
-        }
-        },
     {"name": "file", "symbols": ["header", "sections"]},
     {"name": "header", "symbols": ["format", "_", "cell_line", "_", "genome", "newline"]},
     {"name": "format$string$1", "symbols": [{"literal":"#"}, {"literal":"#"}, {"literal":"f"}, {"literal":"o"}, {"literal":"r"}, {"literal":"m"}, {"literal":"a"}, {"literal":"t"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
@@ -124,10 +99,10 @@ var grammar = {
     {"name": "version", "symbols": ["version$string$1"]},
     {"name": "cell_line$string$1", "symbols": [{"literal":"n"}, {"literal":"a"}, {"literal":"m"}, {"literal":"e"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "cell_line", "symbols": ["cell_line$string$1", "cell_line_name"]},
-    {"name": "cell_line_name", "symbols": ["id"]},
+    {"name": "cell_line_name", "symbols": ["label"]},
     {"name": "genome$string$1", "symbols": [{"literal":"g"}, {"literal":"e"}, {"literal":"n"}, {"literal":"o"}, {"literal":"m"}, {"literal":"e"}, {"literal":"="}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "genome", "symbols": ["genome$string$1", "genome_name"]},
-    {"name": "genome_name", "symbols": ["id"]},
+    {"name": "genome_name", "symbols": ["label"]},
     {"name": "sections", "symbols": ["section"]},
     {"name": "sections", "symbols": ["sections", "section"]},
     {"name": "section", "symbols": ["genomic_section"]},
@@ -146,12 +121,19 @@ var grammar = {
     {"name": "trace_rows", "symbols": ["trace_rows", "trace_row"]},
     {"name": "trace_row$string$1", "symbols": [{"literal":"c"}, {"literal":"h"}, {"literal":"r"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "trace_row", "symbols": ["trace_row$string$1", "int", "_", "int", "_", "int", "_", "decimal", "_", "decimal", "_", "decimal", "newline"]},
-    {"name": "non_genomic_section", "symbols": ["non_genomic_column_title"]},
+    {"name": "non_genomic_section", "symbols": ["non_genomic_column_title", "non_genomics"]},
     {"name": "non_genomic_column_title$string$1", "symbols": [{"literal":"n"}, {"literal":"o"}, {"literal":"n"}, {"literal":"g"}, {"literal":"e"}, {"literal":"n"}, {"literal":"o"}, {"literal":"m"}, {"literal":"i"}, {"literal":"c"}], "postprocess": function joiner(d) {return d.join('');}},
     {"name": "non_genomic_column_title", "symbols": ["non_genomic_column_title$string$1", "newline"]},
-    {"name": "id$ebnf$1", "symbols": [/[\w]/]},
-    {"name": "id$ebnf$1", "symbols": ["id$ebnf$1", /[\w]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "id", "symbols": ["id$ebnf$1"]},
+    {"name": "non_genomics", "symbols": ["non_genomic"]},
+    {"name": "non_genomics", "symbols": ["non_genomics", "non_genomic"]},
+    {"name": "non_genomic", "symbols": ["non_genomic_label", "non_genomic_rows"]},
+    {"name": "non_genomic_label", "symbols": ["label", "newline"]},
+    {"name": "non_genomic_rows", "symbols": ["non_genomic_row"]},
+    {"name": "non_genomic_rows", "symbols": ["non_genomic_rows", "non_genomic_row"]},
+    {"name": "non_genomic_row", "symbols": ["decimal", "_", "decimal", "_", "decimal", "newline"]},
+    {"name": "label$ebnf$1", "symbols": [/[\w]/]},
+    {"name": "label$ebnf$1", "symbols": ["label$ebnf$1", /[\w]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "label", "symbols": ["label$ebnf$1"]},
     {"name": "_$ebnf$1", "symbols": [/[\s\t]/]},
     {"name": "_$ebnf$1", "symbols": ["_$ebnf$1", /[\s\t]/], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "_", "symbols": ["_$ebnf$1"]},
