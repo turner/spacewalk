@@ -34,7 +34,7 @@ trace_label -> "trace" _ int newline
 trace_rows  -> trace_row
             | trace_rows trace_row
 
-trace_row   -> int _ int _ int _ decimal _ decimal _ decimal newline
+trace_row   -> "chr" int _ int _ int _ decimal _ decimal _ decimal newline
 
 non_genomic_section         -> non_genomic_column_title
 non_genomic_column_title    -> "nongenomic" newline

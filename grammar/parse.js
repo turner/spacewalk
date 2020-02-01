@@ -1,22 +1,33 @@
 const nearley = require("nearley");
 const grammar = require("./grammar.js");
 
-// Create a Parser object from our grammar.
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
-// Parse something!
-const file =
-    [
-        '##format=sw1\tname=IMR90 genome=hg38\n',
-        'chromosome\tstart end\tx y z\n',
-        'trace 0\n',
-        '11\t125000 150000\t4.323 -3.950 4.992\n'
-    ];
+const str =
 
-const str = file.join('');
+    '##format=sw1 name=A549 genome=hg38\n' +
+
+    'chromosome\tstart\tend\tx\ty\tz\n' +
+
+    'trace 0\n' +
+    'chr18 50000 100000 121702 120524 120359\n' +
+    'chr18 100000 150000 121381 121344 120706\n' +
+    'chr18 150000 200000 121032 121740 121470\n' +
+
+    'trace 1\n' +
+    'chr18 50000 100000 121727 121616 120815\n' +
+    'chr18 100000 150000 121786 120787 121192\n' +
+    'chr18 150000 200000 121216 120548 121989\n' +
+
+    'trace 2\n' +
+    'chr18 50000 100000 121211 119760 120834\n' +
+    'chr18 100000 150000 122007 120077 121333\n' +
+    'chr18 150000 200000 122944 120197 121320\n';
+
 parser.feed(str);
 
 const parsed = parser.results;
 
 // parser.results is an array of possible parsings.
-console.log(parsed); // [[[[ "foo" ],"\n" ]]]
+console.log(parsed);
+
