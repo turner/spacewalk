@@ -26,37 +26,31 @@ module.exports =
                     targets:
                         [
                             {
+                                src: 'grammar/grammar.js',
+                                dest: 'dist/grammar/'
+                            },
+                            {
                                 src:
                                     [
                                         'css/app.css',
                                         'css/juicebox.css',
-                                        'css/spectrum.css'
+                                        'css/spectrum.css',
+                                        'css/fontawesome',
+                                        'css/img',
+                                        'css/webfonts'
                                     ],
                                 dest: 'dist/css/'
                             },
                             {
-                                src: 'css/fontawesome', dest: 'dist/css/'
-                            },
-                            {
-                                src: 'css/img', dest: 'dist/css/'
-                            },
-                            {
-                                src: 'css/webfonts', dest: 'dist/css/'
-                            },
-                            {
-                                src: 'favicon.ico', dest: 'dist/'
-                            },
-                            {
-                                src: 'vendor', dest: 'dist/'
-                            },
-                            {
-                                src: 'img', dest: 'dist/'
-                            },
-                            {
-                                src: 'texture', dest: 'dist/'
-                            },
-                            {
-                                src: 'resources', dest: 'dist/'
+                                src:
+                                    [
+                                        'favicon.ico',
+                                        'vendor',
+                                        'img',
+                                        'texture',
+                                        'resources'
+                                    ],
+                                dest: 'dist/'
                             },
                             {
                                 src: 'index.html',
