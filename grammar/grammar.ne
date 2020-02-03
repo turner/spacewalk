@@ -10,7 +10,7 @@ const nongenomicHandler = (label, xyzList) => global.nongenomic[ label ] = xyzLi
 @builtin "number.ne"
 @builtin "whitespace.ne"
 
-file            -> header section:+                           {% ([ header, payload ]) => { return global } %}
+file            -> header section:+                         {% (d) => global %}
 
 header          -> format __ cell_line __ genome newline    {% ([ a, b, { cellLine }, c, { genome }, d ]) => { return { 'cellLine': cellLine, 'genome': genome } } %}
 
@@ -23,18 +23,20 @@ cell_line_name  -> label                                    {% id %}
 genome          -> "genome=" genome_name                    {% ([ key, genome ]) => { return { 'genome': genome } } %}
 genome_name     -> label                                    {% id %}
 
-section         -> genomic_section_title trace:+             {% ([ status, traceID ]) => traceID %}
-                 | non_genomic_section_title non_genomic:+   {% ([ status, nonGenomicLabel  ]) => nonGenomicLabel %}
+section         -> genomic_section_title trace:+             {% (d) => null %}
+                 | non_genomic_section_title non_genomic:+   {% (d) => null %}
 
-genomic_section_title    -> "chromosome" _ "start" _ "end" _ "x" _ "y" _ "z" newline         {% (d) => true %}
-trace                   -> trace_label trace_row:+                                          {% ([ traceID, traces ]) => { genomicHandler(traceID, traces); return traceID; } %}
-trace_label             -> "trace" _ int newline                                            {% ([ a, b, traceNumber, c ]) => { return `${ traceNumber }` } %}
-trace_row               -> "chr" int __ int __ int __ decimal __ decimal __ decimal newline {% ([ a, chr, b, start, c, end, d, xx, e, yy, f, zz, g ]) => { return { 'chr': chr, 'start': start, 'end': end, 'x':xx, 'y':yy, 'z':zz } } %}
+genomic_section_title    -> "chromosome" __ "start" __ "end" __ "x" __ "y" __ "z" newline                       {% (d) => true %}
+trace                   -> trace_label trace_row:+                                                              {% (d) => { genomicHandler(d[0], d[1]); return d[0]; } %}
+trace_label             -> "trace" __ int newline                                                               {% (d) => { return `${ d[2] }` } %}
+trace_row               -> "chr" int __ int __ int __ number_or_nan __ number_or_nan __ number_or_nan newline   {% (d) => { return { 'chr': d[1], 'start': d[3], 'end': d[5], 'x':d[7], 'y':d[9], 'z':d[11] } } %}
+number_or_nan           -> decimal  {% id %}
+                         | "nan"    {% id %}
 
-non_genomic_section_title    -> "nongenomic" newline                 {% (d) => false %}
-non_genomic                 -> non_genomic_label non_genomic_row:+  {% ([ nonGenomicLabel, xyzList ]) => { nongenomicHandler(nonGenomicLabel, xyzList); return nonGenomicLabel; } %}
-non_genomic_label           -> label newline                        {% ([ nonGenomicLabel, a ]) => nonGenomicLabel %}
-non_genomic_row             -> decimal _ decimal _ decimal newline  {% ([ xx, a, yy, b, zz, c ]) => { return { 'x':xx, 'y':yy, 'z':zz } } %}
+non_genomic_section_title    -> "nongenomic" newline                    {% (d) => false %}
+non_genomic                 -> non_genomic_label non_genomic_row:+      {% (d) => { nongenomicHandler(d[0], d[1]); return d[0]; } %}
+non_genomic_label           -> label newline                            {% (d) => d[0] %}
+non_genomic_row             -> decimal __ decimal __ decimal newline    {% (d) => { return { 'x':d[0], 'y':d[2], 'z':d[4] } } %}
 
 label       -> [\w]:+       {% (d) => d[0].join("") %}
 newline     -> [\r?\n|\r]   {% (d) => null          %}
