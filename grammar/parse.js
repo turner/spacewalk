@@ -35,5 +35,5 @@ try {
 
 const [ { genomic, nongenomic } ] = parser.results;
 
-console.log(parsed);
+console.log(genomic, nongenomic);
 
