@@ -1,10 +1,10 @@
 const nearley = require("nearley");
-const grammar = require("./grammar.js");
+// const grammar = require("./grammar.js");
+const grammar = require("./pp.js");
 
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
 const str =
-
     '##format=sw1 name=A549 genome=hg38\n' +
 
     'nongenomic\n' +
@@ -13,7 +13,6 @@ const str =
     '122944 120197 121320\n' +
 
     'chromosome\tstart\tend\tx\ty\tz\n' +
-
     'trace 0\n' +
     'chr18 50000 100000 121702 120524 120359\n' +
     'chr18 100000 150000 121381 121344 120706\n' +
@@ -24,20 +23,18 @@ const str =
     'chr18 100000 150000 121786 120787 121192\n' +
     'chr18 150000 200000 121216 120548 121989\n' +
 
-    'trace 2\n' +
-    'chr18 50000 100000 121211 119760 120834\n' +
-    'chr18 100000 150000 122007 120077 121333\n' +
-    'chr18 150000 200000 122944 120197 121320\n' +
-
     'nongenomic\n' +
     'rna\n' +
     '73235 6561 1677\n' +
     '73262 6644 1755\n';
 
-parser.feed(str);
+try {
+    parser.feed(str);
+} catch (e) {
+    console.error(e);
+}
 
-const parsed = parser.results;
+const [ { genomic, nongenomic } ] = parser.results;
 
-// parser.results is an array of possible parsings.
 console.log(parsed);
 
