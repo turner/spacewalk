@@ -54280,8 +54280,10 @@ const long_str =
     'chr19\t15200000\t15560000\t14566\t9725\t840\n' +
     'chr19\t15200000\t15560000\t14867\t9740\t622\n'
 
+const lines = long_str.split('\n');
+
 try {
-    parser.feed(str);
+    parser.feed(long_str);
 } catch (e) {
     console.error(e);
 }

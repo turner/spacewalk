@@ -116,15 +116,15 @@ class Parser {
         }
 
         showSpinner();
-        const np = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
-
-        try {
-            np.feed(string);
-        } catch (e) {
-            console.error(e);
-        }
-
-        const [ { genomic, nongenomic } ] = np.results;
+        // const np = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
+        //
+        // try {
+        //     np.feed(string);
+        // } catch (e) {
+        //     console.error(e);
+        // }
+        //
+        // const [ { genomic, nongenomic } ] = np.results;
 
         const payload = this.parse(string);
         hideSpinner();

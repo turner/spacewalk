@@ -10,17 +10,17 @@ const nongenomicHandler = (label, xyzList) => global.nongenomic[ label ] = xyzLi
 @builtin "number.ne"
 @builtin "whitespace.ne"
 
-file            -> header section:+                         {% (d) => global %}
+file            -> header section:+                         {% (d) => { return { description: d[0], global } } %}
 
-header          -> format __ cell_line __ genome newline    {% ([ a, b, { cellLine }, c, { genome }, d ]) => { return { 'cellLine': cellLine, 'genome': genome } } %}
+header          -> format __ cell_line __ genome newline    {% (d) => { return { 'cellLine': d[2], 'genome': d[4] } } %}
 
 format          -> "##format=" version                      {% (d) => null %}
 version         -> "sw1"                                    {% (d) => null %}
 
-cell_line       -> "name=" cell_line_name                   {% ([ key, cellLine ]) => { return { 'cellLine': cellLine } } %}
+cell_line       -> "name=" cell_line_name                   {% (d) => d[1] %}
 cell_line_name  -> label                                    {% id %}
 
-genome          -> "genome=" genome_name                    {% ([ key, genome ]) => { return { 'genome': genome } } %}
+genome          -> "genome=" genome_name                    {% (d) => d[1] %}
 genome_name     -> label                                    {% id %}
 
 section         -> genomic_section_title trace:+             {% (d) => null %}
