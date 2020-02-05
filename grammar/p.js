@@ -4,9 +4,9 @@ const grammar = require("./min.js");
 const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar));
 
 const str =
-    'chr18 50000 100000 121702 120524 120359\n' +
-    'chr18 100000 150000 121381 121344 120706\n' +
-    'chr18 150000 200000 121032 121740 121470\n';
+    '18 50000 100000 121702 120524 120359\n' +
+    '18 100000 150000 121381 121344 120706\n' +
+    '18 150000 200000 121032 121740 121470\n';
 
 const long_str =
     'chr19\t7400000\t8680000\t13098\t12912\t540\n' +
@@ -54274,7 +54274,7 @@ let portion = subset.join('\n');
 portion = portion + '\n';
 
 try {
-    parser.feed(portion);
+    parser.feed(str);
 } catch (e) {
     console.error(e);
 }
