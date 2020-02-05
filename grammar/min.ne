@@ -16,5 +16,5 @@ const lexer = moo.compile({
 file        -> trace_row:+      {% id %}
 
 trace_row   -> %number %ws %number %ws %number %ws %number %ws %number %ws %number %newline
-{% ([ chr, a, start, b, end, c, xx, d, yy, e, zz, f ]) => { return { chr, start, end, xx, yy, zz } } %}
+{% (d) => { return { chr:d[0], start:d[2], end:d[4], x:d[6], y:d[8], z:d[10] } } %}
 
